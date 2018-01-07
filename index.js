@@ -16,6 +16,9 @@ window.onresize = function() {
 const ctx = foreground.getContext('2d');
 const rocket = new Image();
 rocket.src = './rocket.png';
+const exhaust = new Image();
+exhaust.src = './rocket_exhaust.gif';
+
 
 backctx = background.getContext('2d');
 const bg = new Image();
@@ -34,9 +37,8 @@ const scale = 0.2;
 const coords = {x: 0, y: 0};
 const speedScale = 0.02;
 
-document.onmousemove = function(e) {
-  mouseCoords.x = e.clientX;
-  mouseCoords.y = e.clientY;
+const updateBackground = () => {
+
   backctx.clearRect(
     -100,
     -100,
@@ -54,34 +56,38 @@ document.onmousemove = function(e) {
     window.innerWidth + scaleFactor,
     window.innerHeight + scaleFactor,
   );
+}
+
+document.onmousemove = function(e) {
+  mouseCoords.x = e.clientX;
+  mouseCoords.y = e.clientY;
+};
+
+
+const displacement = {
+    x: mouseCoords.x - coords.x,
+    y: mouseCoords.y - coords.y,
 };
 
 const updatePosition = () => {
-  const displacement = {
-    x: mouseCoords.x - coords.x,
-    y: mouseCoords.y - coords.y,
-  };
+
+    displacement.x = mouseCoords.x - coords.x
+    displacement.y = mouseCoords.y - coords.y
 
   const time = new Date();
-
+  const t  = 2 * Math.PI/6000 * time.getTime()
   const q =
     5 *
     Math.sin(
-      time.getMilliseconds() * 2 * Math.PI / 6000 +
-        2 * Math.PI / 6 +
-        time.getSeconds(),
+      t
     );
   const r =
     5 *
     Math.cos(
-      time.getMilliseconds() * 2 * Math.PI / 6000 +
-        2 * Math.PI / 6 +
-        time.getSeconds(),
+
+        t,
     ) *
-    Math.sin(
-      time.getMilliseconds() * 2 * Math.PI / 6000 +
-        2 * Math.PI / 6 +
-        time.getSeconds(),
+    Math.sin(t
     );
   let oldCoords = {x: coords.x, y: coords.y};
   coords.y =
@@ -99,10 +105,14 @@ const updatePosition = () => {
 
 const animate = () => {
   updatePosition();
+  updateBackground();
   window.requestAnimationFrame(animate);
 };
 
 const drawNewBop = (x, y, angle) => {
+  const rocket_width = x - rocket.width * scale * 0.5;
+  const rocket_height = y - rocket.height * scale * 0.5;
+	
   ctx.save();
   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   ctx.translate(x, y);
@@ -110,11 +120,20 @@ const drawNewBop = (x, y, angle) => {
   ctx.translate(-x, -y);
   ctx.drawImage(
     rocket,
-    x - rocket.width * scale * 0.5,
-    y - rocket.height * scale * 0.5,
+    rocket_width,
+    rocket_height,
     rocket.width * scale,
     rocket.height * scale,
   );
+  if (displacement.x**2+displacement.y**2 > 90000) {	
+  ctx.translate(x,y);
+  ctx.rotate(Math.PI);
+  ctx.translate(-x,-y);
+  ctx.drawImage(exhaust, 
+    x - exhaust.width * scale,
+    y - rocket.height*scale + 20 - exhaust.height * scale,
+    exhaust.width * scale*2,
+    exhaust.height * scale*2)}
   ctx.restore();
 };
 
