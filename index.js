@@ -15,11 +15,10 @@ const rocket = new Image();
 rocket.src = "./rocket.png";
 
 const exhaust = new Image();
-exhaust.src = "./exhaust.png";
 
 let i = 0;
 const frames = 13;
-const spriteWidth = exhaust.width / frames;
+let spriteWidth = exhaust.width / frames;
 
 backctx = background.getContext("2d");
 const bg = new Image();
@@ -133,9 +132,13 @@ const drawNewBop = (x, y, angle) => {
 	ctx.restore();
 };
 
-const audio = new Audio("rocket_man.mp3");
-audio.loop = true;
-audio.play();
+exhaust.onload = function() {
+	spriteWidth = exhaust.width / frames;
+	resize();
+	window.requestAnimationFrame(animate);
+	const audio = new Audio("rocket_man.mp3");
+	audio.loop = true;
+	audio.play();
+};
 
-resize();
-window.requestAnimationFrame(animate);
+exhaust.src = "./exhaust.png";
