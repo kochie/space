@@ -3,13 +3,16 @@ body {
 }
 
 canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100vw;
 	height: 100vh;
 }
 
 #container {
-	background-image: url("./background.png");
-	background-size: cover;
+	/*background-image: url("./background.png");
+	background-size: cover;*/
 	width: 100vw;
 	height: 100vh;
 	position: fixed;
