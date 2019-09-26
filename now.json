@@ -3,7 +3,7 @@
     "builds": [{
         "src": "package.json", "use": "@now/static-build", "config": { "distDir": "dist" }
     }],
-    "aliases": [
+    "alias": [
         "kochie.space"
     ]
 }
