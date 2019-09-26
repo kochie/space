@@ -1,0 +1,30 @@
+{
+  "name": "space",
+  "version": "1.0.0",
+  "description": "A small app that follows the mouse",
+  "main": "./src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build ./src/index.html",
+    "dev": "parcel ./src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kochie/space.git"
+  },
+  "keywords": [
+    "space",
+    "canvas"
+  ],
+  "author": "Robert Koch <robert@kochie.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kochie/space/issues"
+  },
+  "homepage": "https://github.com/kochie/space#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.3"
+  }
+}
