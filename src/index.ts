@@ -23,7 +23,7 @@ class Rocket {
   spriteWidth: number;
 
   constructor(foreground: HTMLCanvasElement) {
-    this.ctx = foreground.getContext("2d");
+    this.ctx = foreground.getContext("2d")!;
     this.frames = 13;
     this.scaleFactor = 200;
     this.mouseCoords = { x: 0, y: 0 };
@@ -135,7 +135,7 @@ class Background {
   constructor(background: HTMLCanvasElement) {
     this.mouseCoords = { x: 0, y: 0 };
     this.scaleFactor = 200;
-    this.ctx = background.getContext("2d");
+    this.ctx = background.getContext("2d")!;
     this.bg = new Image();
     this.bg.src = backgroundImage;
     this.ctx.drawImage(
@@ -173,8 +173,8 @@ class Background {
 }
 
 function main() {
-  const foreground = <HTMLCanvasElement>document.getElementById("foreground");
-  const background = <HTMLCanvasElement>document.getElementById("background");
+  const foreground = document.getElementById("foreground") as HTMLCanvasElement;
+  const background = document.getElementById("background") as HTMLCanvasElement;
 
   const resize = () => {
     background.width = window.innerWidth;
